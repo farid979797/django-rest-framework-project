@@ -20,5 +20,5 @@ from actors.views import ActorAPIView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('api/v1/actorlist', ActorAPIView.as_view())
+    path('api/v1/actorlist/', ActorAPIView.as_view())
 ]

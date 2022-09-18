@@ -6,6 +6,10 @@ from rest_framework.views import APIView
 from actors.models import Actors
 from actors.serializers import ActorSerializer
 
+class ActorAPIList(generics.ListCreateAPIView):                          # упрощение ActorAPIView, get и post           
+    queryset = Actors.objects.all()
+    serializer_class = ActorSerializer
+
 
 class ActorAPIView(APIView):
     def get(self, request):

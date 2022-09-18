@@ -16,10 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from actors.views import ActorAPIView
+from actors.views import ActorAPIView, ActorAPIList
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('api/v1/actorlist/', ActorAPIView.as_view()),
-    path('api/v1/actorlist/<int:pk>/', ActorAPIView.as_view()),
+    path('api/v1/actorlist/', ActorAPIList.as_view()),
+    path('api/v1/actorlist/<int:pk>/', ActorAPIList.as_view()),
 ]

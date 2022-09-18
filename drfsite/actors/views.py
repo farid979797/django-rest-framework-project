@@ -15,15 +15,37 @@ class ActorAPIView(APIView):
     def post(self, request):
         serializer = ActorSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)                          #проверка валидности полученных данных
+        serializer.save()                                                   #вызывает create from serializers.py
 
-        post_new = Actors.objects.create(
-            title=request.data['title'],
-            content=request.data['content'],
-            cat_id=request.data['cat_id']
-        )
-        return Response({'post': ActorSerializer(post_new).data})
+        return Response({'post': serializer.data})
 
+    def put(self, request, *args, **kwargs):
+        pk = kwargs.get("pk", None)
+        if not pk:
+            return Response({"error": "Method PUT not allowed"})
 
+        try:
+            instance = Actors.objects.get(pk=pk)
+        except:
+            return Response({"error": "Object does not exists"})
+
+        serializer = ActorSerializer(data=request.data, instance=instance)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()                                                       #update from serializers.py
+        return Response({"post": serializer.data})
+
+    def delete(self, request, *args, **kwargs):
+        pk = kwargs.get("pk", None)
+        if not pk:
+            return Response({"error": "Method DELETE not allowed"})
+
+        try:
+            instance = Actors.objects.get(pk=pk).delete()
+        except:
+            return Response({"error": "Object does not exists"})
+
+        instance.save()
+        return Response({"post": "delete post " + str(pk)})
 
 # class ActorAPIView(generics.ListAPIView):
 #     queryset = Actors.objects.all()

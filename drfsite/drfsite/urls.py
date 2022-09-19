@@ -19,12 +19,9 @@ from django.urls import path, include
 from actors.views import *
 from rest_framework import routers
 
-router = routers.SimpleRouter()
-router.register(r'actor', ActorViewSet, basename='actor')
-
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/v1/", include(router.urls)),         #127.0.0.1:8000/api/v1/actor/
-    # path('api/v1/actorlist/', ActorViewSet.as_view({'get': 'list'})),
-    # path('api/v1/actorlist/<int:pk>/', ActorViewSet.as_view({'put': 'update'})),
+    path('api/v1/actor/', ActorAPIList.as_view()),
+    path('api/v1/actor/<int:pk>/', ActorAPIUpdate.as_view()),
+    path('api/v1/actordelete/<int:pk>/', ActorAPIDestroy.as_view()),
 ]

@@ -1,6 +1,7 @@
 from django.forms import model_to_dict
 from django.shortcuts import render
-from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAdminUser
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAdminUser, IsAuthenticated
 from rest_framework import generics, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -19,7 +20,8 @@ class ActorAPIList(generics.ListCreateAPIView):                          # уп�
 class ActorAPIUpdate(generics.RetrieveUpdateAPIView):
     queryset = Actors.objects.all()
     serializer_class = ActorSerializer
-    permission_classes = (IsOwnerOrReadOnly, )
+    permission_classes = (IsAuthenticated, )
+    authentication_classes = (TokenAuthentication, )
 
 
 class ActorAPIDestroy(generics.RetrieveDestroyAPIView):

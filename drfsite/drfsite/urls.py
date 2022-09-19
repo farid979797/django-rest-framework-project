@@ -20,7 +20,7 @@ from actors.views import *
 from rest_framework import routers
 
 router = routers.SimpleRouter()
-router.register(r'actor', ActorViewSet)
+router.register(r'actor', ActorViewSet, basename='actor')
 
 urlpatterns = [
     path("admin/", admin.site.urls),
